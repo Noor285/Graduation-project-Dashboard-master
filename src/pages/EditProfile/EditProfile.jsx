@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext'
@@ -7,22 +7,8 @@ function EditProfile() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [user, setUser] = useState('');
-
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-  //   // const updatedProfile = { name, email };
-  //   // axios.post('http://medicalbrain-001-site1.etempurl.com/api/admin/update/profile', updatedProfile).then(() => {
-  //   axios.post('http://medicalbrain-001-site1.etempurl.com/api/admin/update/profile', user).then((res) => {
-  //     setUser(res.data.data)    
-  //     console.log(res.data.data);
-  //   })}
-
   function handleSubmit(event) {
     event.preventDefault();
-    // console.log(user);
-    // const updatedProfile = { name, email };
-    // axios.post('http://medicalbrain-001-site1.etempurl.com/api/admin/update/profile', updatedProfile).then(() => {
     axios.post('http://medicalbrain-001-site1.etempurl.com/api/admin/update/profile',{
       email,name
     },{
@@ -34,20 +20,9 @@ function EditProfile() {
       getprofile();
     })}
 
-    
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const updatedProfile = { name, email };
-  //   axios.post('http://medicalbrain-001-site1.etempurl.com/api/admin/update/profile', updatedProfile)
-  //     .then((response) => {
-  //       setUser(response.data.data); 
-  //       console.log(response.data.data);
-  //     })
-  // };
 
 
   const { token} = useAuth()
-
 
   async function getprofile(){
     await axios.get('http://medicalbrain-001-site1.etempurl.com/api/admin/profile' , {
@@ -56,8 +31,7 @@ function EditProfile() {
       }
     })
     .then(res => {
-      setUser(res.data.data); 
-      console.log(res.data.data);
+      console.log(res.data);
     })
 
  }
@@ -91,10 +65,11 @@ function EditProfile() {
         className="form-control"
       />
       </div>
-
-
+      
+      <Link to={'/profile'}>
       <button type="submit" className="btn btn-success">Save Changes</button>
-
+      </Link>
+      
       <Link to='/profile' className="btn btn-primary">Cancel</Link>
 
     </form>
